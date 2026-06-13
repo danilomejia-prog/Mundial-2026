@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Mundial EC">
+<meta name="theme-color" content="#071427">
+<title>Dashboard Mundial 2026 - Hora Ecuador</title>
+<style>
+:root {
+  --bg:#071427; --panel:#0d203a; --card:#102846; --card2:#0a1a30;
+  --text:#eef6ff; --muted:#a8bed6; --line:rgba(255,255,255,.12);
+  --accent:#16c784; --accent2:#ffd84d; --danger:#ff6b6b; --chip:#1f3e66;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:linear-gradient(180deg,#071427,#0a1727 60%,#071427);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+body{padding:env(safe-area-inset-top) 0 env(safe-area-inset-bottom);}
+header{position:sticky;top:0;z-index:10;background:rgba(7,20,39,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:14px 16px 12px}
+h1{font-size:22px;line-height:1.05;margin:0 0 7px;font-weight:800}
+.subtitle{font-size:13px;color:var(--muted);line-height:1.35}
+.wrap{max-width:1100px;margin:0 auto;padding:14px 14px 90px}
+.hero{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:14px}
+.panel{background:rgba(16,40,70,.85);border:1px solid var(--line);border-radius:20px;padding:14px;box-shadow:0 12px 35px rgba(0,0,0,.22)}
+.next{border:1px solid rgba(22,199,132,.35);background:linear-gradient(135deg,rgba(22,199,132,.16),rgba(255,216,77,.08))}
+.label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.nextTeams{font-size:25px;font-weight:850;margin:7px 0 6px;line-height:1.1}
+.nextMeta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:14px}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:7px 10px;font-size:13px;color:#d8e8fb}
+.pill.ecuador{background:rgba(255,216,77,.18);border-color:rgba(255,216,77,.35);color:#fff2aa}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:16px;padding:12px;text-align:center}
+.stat strong{font-size:22px;display:block}
+.stat span{font-size:12px;color:var(--muted)}
+.controls{position:sticky;top:86px;z-index:9;background:rgba(7,20,39,.84);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:20px;padding:10px;margin-bottom:14px}
+.search{display:flex;gap:8px;margin-bottom:10px}
+input,select,button{font:inherit}
+input,select{width:100%;background:#071a31;color:var(--text);border:1px solid var(--line);border-radius:14px;padding:12px;outline:none}
+button{border:0;background:#164c86;color:white;border-radius:999px;padding:10px 13px;font-weight:750}
+button.active{background:var(--accent);color:#052114}
+.chips{display:flex;gap:8px;overflow:auto;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+.chips button{white-space:nowrap;background:#102846;border:1px solid var(--line);color:#d9ebff}
+.chips button.active{background:var(--accent);color:#052114;border-color:transparent}
+.day{margin:18px 0 10px;font-size:18px;font-weight:850;display:flex;align-items:center;gap:8px}
+.day small{font-size:12px;color:var(--muted);font-weight:700}
+.grid{display:grid;grid-template-columns:1fr;gap:10px}
+.card{background:linear-gradient(180deg,rgba(16,40,70,.95),rgba(13,32,58,.95));border:1px solid var(--line);border-radius:18px;padding:14px;display:grid;grid-template-columns:72px 1fr;gap:12px;align-items:center}
+.card.ecuador{border-color:rgba(255,216,77,.55);box-shadow:0 0 0 1px rgba(255,216,77,.12),0 12px 30px rgba(0,0,0,.18)}
+.time{text-align:center;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:16px;padding:10px 4px}
+.hour{font-size:20px;font-weight:900}
+.dateMini{font-size:11px;color:var(--muted);margin-top:3px}
+.teams{min-width:0}
+.matchTitle{font-size:17px;font-weight:820;line-height:1.18;margin-bottom:8px}
+.meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.status{font-size:12px;border-radius:999px;padding:5px 8px;border:1px solid var(--line);color:#dbeeff;background:rgba(255,255,255,.05)}
+.status.final{background:rgba(22,199,132,.16);border-color:rgba(22,199,132,.36)}
+.score{font-weight:900;color:var(--accent2)}
+.hidden{display:none!important}
+.footerNote{color:var(--muted);font-size:12px;line-height:1.45;margin-top:20px}
+@media(min-width:720px){
+  h1{font-size:30px}
+  .hero{grid-template-columns:1.35fr .65fr}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .controls{top:96px}
+}
+@media(min-width:1040px){.grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<header>
+  <h1>Calendario Mundial 2026</h1>
+  <div class="subtitle">Dashboard móvil en <b>hora Ecuador continental (UTC-5)</b>. Optimizado para Safari/iPhone.</div>
+</header>
+<main class="wrap">
+  <section class="hero">
+    <div class="panel next" id="nextPanel">
+      <div class="label">Próximo partido</div>
+      <div class="nextTeams" id="nextTeams">Cargando…</div>
+      <div class="nextMeta" id="nextMeta"></div>
+    </div>
+    <div class="panel">
+      <div class="label">Resumen</div>
+      <div class="stats">
+        <div class="stat"><strong id="totalCount">0</strong><span>partidos</span></div>
+        <div class="stat"><strong id="ecuCount">0</strong><span>de Ecuador</span></div>
+        <div class="stat"><strong id="todayCount">0</strong><span>hoy</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="controls">
+    <div class="search">
+      <input id="q" placeholder="Buscar país: Ecuador, Brasil, Argentina…" autocomplete="off">
+      <select id="group">
+        <option value="">Todos los grupos</option>
+        <option value="A">Grupo A</option><option value="B">Grupo B</option><option value="C">Grupo C</option><option value="D">Grupo D</option><option value="E">Grupo E</option><option value="F">Grupo F</option><option value="G">Grupo G</option><option value="H">Grupo H</option><option value="I">Grupo I</option><option value="J">Grupo J</option><option value="K">Grupo K</option><option value="L">Grupo L</option>
+      </select>
+    </div>
+    <div class="chips">
+      <button class="active" data-filter="all">Todos</button>
+      <button data-filter="today">Hoy</button>
+      <button data-filter="upcoming">Próximos</button>
+      <button data-filter="ecuador">Solo Ecuador 🇪🇨</button>
+      <button data-filter="final">Finalizados</button>
+    </div>
+  </section>
+
+  <section id="list"></section>
+
+  <p class="footerNote">
+    Nota: los horarios se calculan automáticamente desde UTC a la zona <b>America/Guayaquil</b>. 
+    En Ecuador continental no hay cambio de horario de verano. Algunos partidos nocturnos cambian de fecha al convertir desde hora del Este de EE. UU. a hora Ecuador.
+  </p>
+</main>
+
+<script>
+const MATCHES = [{"utc": "2026-06-11T19:00:00Z", "team1": "México", "abbr1": "MEX", "team2": "Sudáfrica", "abbr2": "RSA", "group": "A", "status": "Finalizado", "score": "2-0"}, {"utc": "2026-06-12T02:00:00Z", "team1": "Corea del Sur", "abbr1": "KOR", "team2": "Chequia", "abbr2": "CZE", "group": "A", "status": "Finalizado", "score": "2-1"}, {"utc": "2026-06-12T19:00:00Z", "team1": "Canadá", "abbr1": "CAN", "team2": "Bosnia y Herzegovina", "abbr2": "BIH", "group": "B", "status": "Finalizado", "score": "1-1"}, {"utc": "2026-06-13T01:00:00Z", "team1": "Estados Unidos", "abbr1": "USA", "team2": "Paraguay", "abbr2": "PAR", "group": "D", "status": "Finalizado", "score": "4-1"}, {"utc": "2026-06-13T19:00:00Z", "team1": "Catar", "abbr1": "QAT", "team2": "Suiza", "abbr2": "SUI", "group": "B", "status": "Programado", "score": ""}, {"utc": "2026-06-13T22:00:00Z", "team1": "Brasil", "abbr1": "BRA", "team2": "Marruecos", "abbr2": "MAR", "group": "C", "status": "Programado", "score": ""}, {"utc": "2026-06-14T01:00:00Z", "team1": "Haití", "abbr1": "HTI", "team2": "Escocia", "abbr2": "SCO", "group": "C", "status": "Programado", "score": ""}, {"utc": "2026-06-14T04:00:00Z", "team1": "Australia", "abbr1": "AUS", "team2": "Turquía", "abbr2": "TUR", "group": "D", "status": "Programado", "score": ""}, {"utc": "2026-06-14T17:00:00Z", "team1": "Alemania", "abbr1": "GER", "team2": "Curazao", "abbr2": "CUW", "group": "E", "status": "Programado", "score": ""}, {"utc": "2026-06-14T20:00:00Z", "team1": "Países Bajos", "abbr1": "NED", "team2": "Japón", "abbr2": "JPN", "group": "F", "status": "Programado", "score": ""}, {"utc": "2026-06-14T23:00:00Z", "team1": "Costa de Marfil", "abbr1": "CIV", "team2": "Ecuador", "abbr2": "ECU", "group": "E", "status": "Programado", "score": ""}, {"utc": "2026-06-15T02:00:00Z", "team1": "Suecia", "abbr1": "SWE", "team2": "Túnez", "abbr2": "TUN", "group": "F", "status": "Programado", "score": ""}, {"utc": "2026-06-15T16:00:00Z", "team1": "España", "abbr1": "ESP", "team2": "Cabo Verde", "abbr2": "CPV", "group": "H", "status": "Programado", "score": ""}, {"utc": "2026-06-15T19:00:00Z", "team1": "Bélgica", "abbr1": "BEL", "team2": "Egipto", "abbr2": "EGY", "group": "G", "status": "Programado", "score": ""}, {"utc": "2026-06-15T22:00:00Z", "team1": "Arabia Saudita", "abbr1": "KSA", "team2": "Uruguay", "abbr2": "URU", "group": "H", "status": "Programado", "score": ""}, {"utc": "2026-06-16T01:00:00Z", "team1": "Irán", "abbr1": "IRI", "team2": "Nueva Zelanda", "abbr2": "NZL", "group": "G", "status": "Programado", "score": ""}, {"utc": "2026-06-16T19:00:00Z", "team1": "Francia", "abbr1": "FRA", "team2": "Senegal", "abbr2": "SEN", "group": "I", "status": "Programado", "score": ""}, {"utc": "2026-06-16T22:00:00Z", "team1": "Irak", "abbr1": "IRQ", "team2": "Noruega", "abbr2": "NOR", "group": "I", "status": "Programado", "score": ""}, {"utc": "2026-06-17T01:00:00Z", "team1": "Argentina", "abbr1": "ARG", "team2": "Argelia", "abbr2": "DZA", "group": "J", "status": "Programado", "score": ""}, {"utc": "2026-06-17T04:00:00Z", "team1": "Austria", "abbr1": "AUT", "team2": "Jordania", "abbr2": "JOR", "group": "J", "status": "Programado", "score": ""}, {"utc": "2026-06-17T17:00:00Z", "team1": "Portugal", "abbr1": "POR", "team2": "RD Congo", "abbr2": "COD", "group": "K", "status": "Programado", "score": ""}, {"utc": "2026-06-17T20:00:00Z", "team1": "Inglaterra", "abbr1": "ENG", "team2": "Croacia", "abbr2": "CRO", "group": "L", "status": "Programado", "score": ""}, {"utc": "2026-06-17T23:00:00Z", "team1": "Ghana", "abbr1": "GHA", "team2": "Panamá", "abbr2": "PAN", "group": "L", "status": "Programado", "score": ""}, {"utc": "2026-06-18T02:00:00Z", "team1": "Uzbekistán", "abbr1": "UZB", "team2": "Colombia", "abbr2": "COL", "group": "K", "status": "Programado", "score": ""}, {"utc": "2026-06-18T16:00:00Z", "team1": "Chequia", "abbr1": "CZE", "team2": "Sudáfrica", "abbr2": "RSA", "group": "A", "status": "Programado", "score": ""}, {"utc": "2026-06-18T19:00:00Z", "team1": "Suiza", "abbr1": "SUI", "team2": "Bosnia y Herzegovina", "abbr2": "BIH", "group": "B", "status": "Programado", "score": ""}, {"utc": "2026-06-18T22:00:00Z", "team1": "Canadá", "abbr1": "CAN", "team2": "Catar", "abbr2": "QAT", "group": "B", "status": "Programado", "score": ""}, {"utc": "2026-06-19T01:00:00Z", "team1": "México", "abbr1": "MEX", "team2": "Corea del Sur", "abbr2": "KOR", "group": "A", "status": "Programado", "score": ""}, {"utc": "2026-06-19T19:00:00Z", "team1": "Estados Unidos", "abbr1": "USA", "team2": "Australia", "abbr2": "AUS", "group": "D", "status": "Programado", "score": ""}, {"utc": "2026-06-19T22:00:00Z", "team1": "Escocia", "abbr1": "SCO", "team2": "Marruecos", "abbr2": "MAR", "group": "C", "status": "Programado", "score": ""}, {"utc": "2026-06-20T00:30:00Z", "team1": "Brasil", "abbr1": "BRA", "team2": "Haití", "abbr2": "HTI", "group": "C", "status": "Programado", "score": ""}, {"utc": "2026-06-20T03:00:00Z", "team1": "Turquía", "abbr1": "TUR", "team2": "Paraguay", "abbr2": "PAR", "group": "D", "status": "Programado", "score": ""}, {"utc": "2026-06-20T17:00:00Z", "team1": "Países Bajos", "abbr1": "NED", "team2": "Suecia", "abbr2": "SWE", "group": "F", "status": "Programado", "score": ""}, {"utc": "2026-06-20T20:00:00Z", "team1": "Alemania", "abbr1": "GER", "team2": "Costa de Marfil", "abbr2": "CIV", "group": "E", "status": "Programado", "score": ""}, {"utc": "2026-06-21T00:00:00Z", "team1": "Ecuador", "abbr1": "ECU", "team2": "Curazao", "abbr2": "CUW", "group": "E", "status": "Programado", "score": ""}, {"utc": "2026-06-21T04:00:00Z", "team1": "Túnez", "abbr1": "TUN", "team2": "Japón", "abbr2": "JPN", "group": "F", "status": "Programado", "score": ""}, {"utc": "2026-06-21T16:00:00Z", "team1": "España", "abbr1": "ESP", "team2": "Arabia Saudita", "abbr2": "KSA", "group": "H", "status": "Programado", "score": ""}, {"utc": "2026-06-21T19:00:00Z", "team1": "Bélgica", "abbr1": "BEL", "team2": "Irán", "abbr2": "IRI", "group": "G", "status": "Programado", "score": ""}, {"utc": "2026-06-21T22:00:00Z", "team1": "Uruguay", "abbr1": "URU", "team2": "Cabo Verde", "abbr2": "CPV", "group": "H", "status": "Programado", "score": ""}, {"utc": "2026-06-22T01:00:00Z", "team1": "Nueva Zelanda", "abbr1": "NZL", "team2": "Egipto", "abbr2": "EGY", "group": "G", "status": "Programado", "score": ""}, {"utc": "2026-06-22T17:00:00Z", "team1": "Argentina", "abbr1": "ARG", "team2": "Austria", "abbr2": "AUT", "group": "J", "status": "Programado", "score": ""}, {"utc": "2026-06-22T21:00:00Z", "team1": "Francia", "abbr1": "FRA", "team2": "Irak", "abbr2": "IRQ", "group": "I", "status": "Programado", "score": ""}, {"utc": "2026-06-23T00:00:00Z", "team1": "Noruega", "abbr1": "NOR", "team2": "Senegal", "abbr2": "SEN", "group": "I", "status": "Programado", "score": ""}, {"utc": "2026-06-23T03:00:00Z", "team1": "Jordania", "abbr1": "JOR", "team2": "Argelia", "abbr2": "DZA", "group": "J", "status": "Programado", "score": ""}, {"utc": "2026-06-23T17:00:00Z", "team1": "Portugal", "abbr1": "POR", "team2": "Uzbekistán", "abbr2": "UZB", "group": "K", "status": "Programado", "score": ""}, {"utc": "2026-06-23T20:00:00Z", "team1": "Inglaterra", "abbr1": "ENG", "team2": "Ghana", "abbr2": "GHA", "group": "L", "status": "Programado", "score": ""}, {"utc": "2026-06-23T23:00:00Z", "team1": "Panamá", "abbr1": "PAN", "team2": "Croacia", "abbr2": "CRO", "group": "L", "status": "Programado", "score": ""}, {"utc": "2026-06-24T02:00:00Z", "team1": "Colombia", "abbr1": "COL", "team2": "RD Congo", "abbr2": "COD", "group": "K", "status": "Programado", "score": ""}, {"utc": "2026-06-24T19:00:00Z", "team1": "Suiza", "abbr1": "SUI", "team2": "Canadá", "abbr2": "CAN", "group": "B", "status": "Programado", "score": ""}, {"utc": "2026-06-24T19:00:00Z", "team1": "Bosnia y Herzegovina", "abbr1": "BIH", "team2": "Catar", "abbr2": "QAT", "group": "B", "status": "Programado", "score": ""}, {"utc": "2026-06-24T22:00:00Z", "team1": "Escocia", "abbr1": "SCO", "team2": "Brasil", "abbr2": "BRA", "group": "C", "status": "Programado", "score": ""}, {"utc": "2026-06-24T22:00:00Z", "team1": "Marruecos", "abbr1": "MAR", "team2": "Haití", "abbr2": "HTI", "group": "C", "status": "Programado", "score": ""}, {"utc": "2026-06-25T01:00:00Z", "team1": "Chequia", "abbr1": "CZE", "team2": "México", "abbr2": "MEX", "group": "A", "status": "Programado", "score": ""}, {"utc": "2026-06-25T01:00:00Z", "team1": "Sudáfrica", "abbr1": "RSA", "team2": "Corea del Sur", "abbr2": "KOR", "group": "A", "status": "Programado", "score": ""}, {"utc": "2026-06-25T20:00:00Z", "team1": "Ecuador", "abbr1": "ECU", "team2": "Alemania", "abbr2": "GER", "group": "E", "status": "Programado", "score": ""}, {"utc": "2026-06-25T20:00:00Z", "team1": "Curazao", "abbr1": "CUW", "team2": "Costa de Marfil", "abbr2": "CIV", "group": "E", "status": "Programado", "score": ""}, {"utc": "2026-06-25T23:00:00Z", "team1": "Túnez", "abbr1": "TUN", "team2": "Países Bajos", "abbr2": "NED", "group": "F", "status": "Programado", "score": ""}, {"utc": "2026-06-25T23:00:00Z", "team1": "Japón", "abbr1": "JPN", "team2": "Suecia", "abbr2": "SWE", "group": "F", "status": "Programado", "score": ""}, {"utc": "2026-06-26T02:00:00Z", "team1": "Turquía", "abbr1": "TUR", "team2": "Estados Unidos", "abbr2": "USA", "group": "D", "status": "Programado", "score": ""}, {"utc": "2026-06-26T02:00:00Z", "team1": "Paraguay", "abbr1": "PAR", "team2": "Australia", "abbr2": "AUS", "group": "D", "status": "Programado", "score": ""}, {"utc": "2026-06-26T19:00:00Z", "team1": "Noruega", "abbr1": "NOR", "team2": "Francia", "abbr2": "FRA", "group": "I", "status": "Programado", "score": ""}, {"utc": "2026-06-26T19:00:00Z", "team1": "Senegal", "abbr1": "SEN", "team2": "Irak", "abbr2": "IRQ", "group": "I", "status": "Programado", "score": ""}, {"utc": "2026-06-27T00:00:00Z", "team1": "Uruguay", "abbr1": "URU", "team2": "España", "abbr2": "ESP", "group": "H", "status": "Programado", "score": ""}, {"utc": "2026-06-27T00:00:00Z", "team1": "Cabo Verde", "abbr1": "CPV", "team2": "Arabia Saudita", "abbr2": "KSA", "group": "H", "status": "Programado", "score": ""}, {"utc": "2026-06-27T03:00:00Z", "team1": "Nueva Zelanda", "abbr1": "NZL", "team2": "Bélgica", "abbr2": "BEL", "group": "G", "status": "Programado", "score": ""}, {"utc": "2026-06-27T03:00:00Z", "team1": "Egipto", "abbr1": "EGY", "team2": "Irán", "abbr2": "IRI", "group": "G", "status": "Programado", "score": ""}, {"utc": "2026-06-27T21:00:00Z", "team1": "Panamá", "abbr1": "PAN", "team2": "Inglaterra", "abbr2": "ENG", "group": "L", "status": "Programado", "score": ""}, {"utc": "2026-06-27T21:00:00Z", "team1": "Croacia", "abbr1": "CRO", "team2": "Ghana", "abbr2": "GHA", "group": "L", "status": "Programado", "score": ""}, {"utc": "2026-06-27T23:30:00Z", "team1": "Colombia", "abbr1": "COL", "team2": "Portugal", "abbr2": "POR", "group": "K", "status": "Programado", "score": ""}, {"utc": "2026-06-27T23:30:00Z", "team1": "RD Congo", "abbr1": "COD", "team2": "Uzbekistán", "abbr2": "UZB", "group": "K", "status": "Programado", "score": ""}, {"utc": "2026-06-28T02:00:00Z", "team1": "Jordania", "abbr1": "JOR", "team2": "Argentina", "abbr2": "ARG", "group": "J", "status": "Programado", "score": ""}, {"utc": "2026-06-28T02:00:00Z", "team1": "Argelia", "abbr1": "DZA", "team2": "Austria", "abbr2": "AUT", "group": "J", "status": "Programado", "score": ""}];
+const TZ = 'America/Guayaquil';
+let currentFilter = 'all';
+
+function dt(m) { return new Date(m.utc); }
+function fmtDate(d) {
+  return new Intl.DateTimeFormat('es-EC', { weekday:'long', day:'2-digit', month:'long', timeZone:TZ }).format(d);
+}
+function fmtShortDate(d) {
+  return new Intl.DateTimeFormat('es-EC', { day:'2-digit', month:'short', timeZone:TZ }).format(d);
+}
+function fmtTime(d) {
+  return new Intl.DateTimeFormat('es-EC', { hour:'2-digit', minute:'2-digit', hour12:false, timeZone:TZ }).format(d);
+}
+function dayKey(d) {
+  return new Intl.DateTimeFormat('en-CA', { year:'numeric', month:'2-digit', day:'2-digit', timeZone:TZ }).format(d);
+}
+function isToday(d) { return dayKey(d) === dayKey(new Date()); }
+function isUpcoming(m) { return dt(m).getTime() >= Date.now() && m.status !== 'Finalizado'; }
+function isEcuador(m) { return m.abbr1 === 'ECU' || m.abbr2 === 'ECU'; }
+
+function applyFilters() {
+  const q = document.getElementById('q').value.trim().toLowerCase();
+  const g = document.getElementById('group').value;
+  return MATCHES.filter(m => {
+    const text = `${m.team1} ${m.team2} ${m.abbr1} ${m.abbr2}`.toLowerCase();
+    if (q && !text.includes(q)) return false;
+    if (g && m.group !== g) return false;
+    if (currentFilter === 'today' && !isToday(dt(m))) return false;
+    if (currentFilter === 'upcoming' && !isUpcoming(m)) return false;
+    if (currentFilter === 'ecuador' && !isEcuador(m)) return false;
+    if (currentFilter === 'final' && m.status !== 'Finalizado') return false;
+    return true;
+  });
+}
+
+function render() {
+  const list = document.getElementById('list');
+  const filtered = applyFilters().sort((a,b)=>dt(a)-dt(b));
+  const groups = {};
+  filtered.forEach(m => {
+    const key = dayKey(dt(m));
+    (groups[key] ||= []).push(m);
+  });
+  list.innerHTML = '';
+  if (!filtered.length) {
+    list.innerHTML = '<div class="panel">No hay partidos con esos filtros.</div>';
+    return;
+  }
+  Object.entries(groups).forEach(([key, arr]) => {
+    const h = document.createElement('div');
+    h.className = 'day';
+    h.innerHTML = `<span>${fmtDate(dt(arr[0]))}</span><small>${arr.length} partido${arr.length>1?'s':''}</small>`;
+    list.appendChild(h);
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    arr.forEach(m => {
+      const d = dt(m);
+      const card = document.createElement('article');
+      card.className = 'card' + (isEcuador(m) ? ' ecuador' : '');
+      card.innerHTML = `
+        <div class="time">
+          <div class="hour">${fmtTime(d)}</div>
+          <div class="dateMini">EC · ${fmtShortDate(d)}</div>
+        </div>
+        <div class="teams">
+          <div class="matchTitle">${m.team1} <span style="color:#85a6c9">vs</span> ${m.team2}</div>
+          <div class="meta">
+            <span class="pill">Grupo ${m.group}</span>
+            ${isEcuador(m)?'<span class="pill ecuador">Ecuador 🇪🇨</span>':''}
+            <span class="status ${m.status==='Finalizado'?'final':''}">${m.status}</span>
+            ${m.score?`<span class="score">${m.score}</span>`:''}
+          </div>
+        </div>`;
+      grid.appendChild(card);
+    });
+    list.appendChild(grid);
+  });
+}
+
+function updateStats() {
+  document.getElementById('totalCount').textContent = MATCHES.length;
+  document.getElementById('ecuCount').textContent = MATCHES.filter(isEcuador).length;
+  document.getElementById('todayCount').textContent = MATCHES.filter(m=>isToday(dt(m))).length;
+  const next = MATCHES.filter(isUpcoming).sort((a,b)=>dt(a)-dt(b))[0] || MATCHES[MATCHES.length-1];
+  const nd = dt(next);
+  document.getElementById('nextTeams').textContent = `${next.team1} vs ${next.team2}`;
+  document.getElementById('nextMeta').innerHTML = `
+    <span class="pill">🕒 ${fmtTime(nd)} Ecuador</span>
+    <span class="pill">📅 ${fmtDate(nd)}</span>
+    <span class="pill">Grupo ${next.group}</span>
+    ${isEcuador(next)?'<span class="pill ecuador">🇪🇨 Ecuador</span>':''}
+  `;
+}
+
+document.querySelectorAll('.chips button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.chips button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    render();
+  });
+});
+document.getElementById('q').addEventListener('input', render);
+document.getElementById('group').addEventListener('change', render);
+
+updateStats();
+render();
+</script>
+</body>
+</html>
